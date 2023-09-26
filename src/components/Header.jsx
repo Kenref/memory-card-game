@@ -4,7 +4,7 @@ export default function Header() {
 	const [score, setScore] = useState(0);
 	const [highScore, setHighScore] = useState(0);
 	return (
-		<header className="container">
+		<header>
 			<div className="row">
 				<div className="col-10">
 					<h1>Memory card game</h1>
