@@ -9,7 +9,7 @@ export default function Header() {
 				<div className="col-10">
 					<h1>Memory card game</h1>
 					<p>
-						Get points by clicking on unique cards, but don't click on any more
+						Get points by clicking on unique cards, but do not click on any more
 						than once
 					</p>
 				</div>

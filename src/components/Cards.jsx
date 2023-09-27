@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
 function capitalise(word) {
 	return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-export default function Card({ monster, pokemonName }) {
+export default function Card({ monster, onClick }) {
 	const [cardName, setCardName] = useState("Card Name");
 	const [imageURL, setImageURL] = useState(null);
 	const altText = `${cardName} sprite`;
@@ -20,12 +21,20 @@ export default function Card({ monster, pokemonName }) {
 				setCardName(name);
 			})
 			.catch((error) => console.log(error));
-	}, [monster, pokemonName]);
+	}, [monster]);
 
 	return (
-		<div className="card border border-primary border-3 col-2">
+		<div
+			className="card border border-primary border-3 col-2"
+			onClick={onClick}
+		>
 			<img className="card-img-top" src={imageURL} alt={altText} />
 			<h4 className="card-title">{cardName}</h4>
 		</div>
 	);
 }
+
+Card.propTypes = {
+	monster: PropTypes.number.isRequired,
+	onClick: PropTypes.func.isRequired,
+};

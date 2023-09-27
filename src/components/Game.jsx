@@ -17,15 +17,21 @@ export default function Game() {
 	const [cards, setCards] = useState([]);
 	useEffect(() => {
 		setCards(
-			[...Array(2)].map((_, i) => ({ id: getRandomNumber(1000), name: null }))
+			[...Array(10)].map((_, i) => ({ id: getRandomNumber(1000), name: null }))
 		);
 	}, []);
+
+	const handleShuffle = () => {
+		const shuffled = shuffleCards([...cards]);
+		setCards(shuffled);
+		console.log(shuffled);
+	};
 
 	return (
 		<div className="row gap-4 text-center justify-content-center">
 			{cards.map((card, i) => {
-				console.log(i);
-				return <Card monster={card.id} key={i}></Card>;
+				// console.log(i);
+				return <Card monster={card.id} key={i} onClick={handleShuffle}></Card>;
 			})}
 		</div>
 	);
