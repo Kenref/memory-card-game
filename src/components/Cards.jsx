@@ -20,7 +20,9 @@ export default function Card({ monster, onClick }) {
 				const name = capitalise(response.name);
 				setCardName(name);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {
+				console.log(`Fetch error for monster ID ${monster}:`, error);
+			});
 	}, [monster]);
 
 	return (
