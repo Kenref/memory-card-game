@@ -4,7 +4,7 @@ function capitalise(word) {
 	return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-export default function Card({ monster }) {
+export default function Card({ monster, pokemonName }) {
 	const [cardName, setCardName] = useState("Card Name");
 	const [imageURL, setImageURL] = useState(null);
 	const altText = `${cardName} sprite`;
@@ -16,9 +16,11 @@ export default function Card({ monster }) {
 			.then((response) => response.json())
 			.then((response) => {
 				setImageURL(response.sprites.front_default);
-				setCardName(capitalise(response.name));
-			});
-	}, [monster]);
+				const name = capitalise(response.name);
+				setCardName(name);
+			})
+			.catch((error) => console.log(error));
+	}, [monster, pokemonName]);
 
 	return (
 		<div className="card border border-primary border-3 col-2">
