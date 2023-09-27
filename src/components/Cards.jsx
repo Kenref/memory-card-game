@@ -21,7 +21,8 @@ export default function Card({ monster, onClick }) {
 				setCardName(name);
 			})
 			.catch((error) => {
-				console.log(`Fetch error for monster ID ${monster}:`, error);
+				// console.log(`Fetch error for monster ID ${monster}:`, error);
+				window.location.reload();
 			});
 	}, [monster]);
 
