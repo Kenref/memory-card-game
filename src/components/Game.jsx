@@ -25,7 +25,7 @@ export default function Game() {
 	// generating the initial cards
 	useEffect(() => {
 		const existingNumbers = new Set(uniqueNumbers);
-		const initialCards = [...Array(20)].map((_, i) => {
+		const initialCards = [...Array(15)].map((_, i) => {
 			const uniqueNumber = getRandomNumber(1000, existingNumbers);
 			existingNumbers.add(uniqueNumber);
 			return { id: uniqueNumber, name: null };
