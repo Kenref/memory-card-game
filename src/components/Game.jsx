@@ -25,14 +25,18 @@ export default function Game() {
 	// generating the initial cards
 	useEffect(() => {
 		const existingNumbers = new Set(uniqueNumbers);
-		const initialCards = [...Array(15)].map((_, i) => {
+		const initialCards = [...Array(5)].map((_, i) => {
 			const uniqueNumber = getRandomNumber(1000, existingNumbers);
 			existingNumbers.add(uniqueNumber);
-			return { id: uniqueNumber, name: null };
+			return { apiID: uniqueNumber, pokemonName: null };
 		});
 		setCards(initialCards);
 		setUniqueNumbers(existingNumbers);
 	}, []);
+
+	const handleGetPokemonName = (pokemonName) => {
+		console.log(pokemonName);
+	};
 
 	const handleShuffle = () => {
 		const shuffled = shuffleCards([...cards]);
@@ -44,27 +48,28 @@ export default function Game() {
 		console.log(clickedCards);
 	};
 
-	const checkDuplicate = (clickedCards, id) => {
-		if (clickedCards.includes(id)) {
+	const checkDuplicate = (clickedCards, apiID) => {
+		if (clickedCards.includes(apiID)) {
 			console.log("game over");
 		}
 	};
 
 	const addScore = () => {};
 
-	const handleSaveClickAndShuffle = (id) => {
+	const handleSaveClickAndShuffle = (apiID) => {
 		handleShuffle();
-		saveClick(id);
+		saveClick(apiID);
 		checkDuplicate(clickedCards);
 	};
-
+	console.log(cards);
 	return (
 		<div className="row gap-4 text-center justify-content-center">
 			{cards.map((card, i) => {
 				// console.log(i);
 				return (
 					<Card
-						monster={card.id}
+						pokemonApiID={card.apiID}
+						getPokemonName={handleGetPokemonName}
 						key={i}
 						onClick={() => {
 							handleSaveClickAndShuffle(i);

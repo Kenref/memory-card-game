@@ -5,13 +5,12 @@ function capitalise(word) {
 	return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-export default function Card({ monster, onClick }) {
+export default function Card({ pokemonApiID, onClick, getPokemonName }) {
 	const [cardName, setCardName] = useState("Card Name");
 	const [imageURL, setImageURL] = useState(null);
 	const altText = `${cardName} sprite`;
-
 	useEffect(() => {
-		fetch(`https://pokeapi.co/api/v2/pokemon/${monster}/`, {
+		fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonApiID}/`, {
 			mode: "cors",
 		})
 			.then((response) => response.json())
@@ -19,12 +18,16 @@ export default function Card({ monster, onClick }) {
 				setImageURL(response.sprites.front_default);
 				const name = capitalise(response.name);
 				setCardName(name);
+				getPokemonName(name);
 			})
 			.catch((error) => {
-				// console.log(`Fetch error for monster ID ${monster}:`, error);
-				window.location.reload();
+				console.log(
+					`Fetch error for pokemon monster api ID ${pokemonApiID}:`,
+					error
+				);
+				// window.location.reload();
 			});
-	}, [monster]);
+	}, [pokemonApiID, getPokemonName]);
 
 	return (
 		<div
@@ -38,6 +41,7 @@ export default function Card({ monster, onClick }) {
 }
 
 Card.propTypes = {
-	monster: PropTypes.number.isRequired,
+	pokemonApiID: PropTypes.number.isRequired,
 	onClick: PropTypes.func.isRequired,
+	getPokemonName: PropTypes.func.isRequired,
 };
