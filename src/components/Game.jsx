@@ -28,7 +28,7 @@ export default function Game() {
 			const initialCards = [...Array(5)].map((_, i) => {
 				const uniqueNumber = getRandomNumber(1000, existingNumbers);
 				existingNumbers.add(uniqueNumber);
-				return { apiID: uniqueNumber, pokemonName: null };
+				return { apiID: uniqueNumber, pokemonName: `TempName_${uniqueNumber}` };
 			});
 			setCards(initialCards);
 			setUniqueNumbers(existingNumbers);
@@ -49,8 +49,11 @@ export default function Game() {
 	};
 
 	const saveClick = (pokemon) => {
-		setClickedCards([...clickedCards, pokemon]);
-		console.log(clickedCards);
+		setClickedCards((prevClickedCards) => {
+			const newClickedCards = [...prevClickedCards, pokemon];
+			console.log(newClickedCards);
+			return newClickedCards;
+		});
 	};
 
 	const checkDuplicate = (clickedCards, apiID) => {

@@ -25,7 +25,7 @@ export default function Card({ pokemonApiID, onClick, getPokemonName }) {
 					`Fetch error for pokemon monster api ID ${pokemonApiID}:`,
 					error
 				);
-				// window.location.reload();
+				window.location.reload();
 			});
 	}, [pokemonApiID]);
 
