@@ -51,24 +51,31 @@ export default function Game() {
 	const saveClick = (pokemon) => {
 		setClickedCards((prevClickedCards) => {
 			const newClickedCards = [...prevClickedCards, pokemon];
-			console.log(newClickedCards);
+			// console.log(newClickedCards);
 			return newClickedCards;
 		});
 	};
 
-	const checkDuplicate = (clickedCards, apiID) => {
-		if (clickedCards.includes(apiID)) {
+	const checkGameResult = (clickedCards) => {
+		const uniquePokemon = new Set(clickedCards);
+		if (uniquePokemon.size < clickedCards.length) {
 			console.log("game over");
+		} else if (clickedCards.length === cards.length) {
+			console.log("game win");
 		}
 	};
 
 	const addScore = () => {};
 
-	const handleSaveClickAndShuffle = (apiID) => {
+	useEffect(() => {
+		checkGameResult(clickedCards);
+		console.log(clickedCards);
+	}, [clickedCards]);
+
+	const handleSaveClickAndShuffle = (pokemon) => {
+		saveClick(pokemon);
 		handleShuffle();
-		saveClick(apiID);
-		checkDuplicate(clickedCards);
-		console.log(cards);
+		// console.log(cards);
 	};
 	return (
 		<div className="row gap-4 text-center justify-content-center">
@@ -79,7 +86,7 @@ export default function Game() {
 						getPokemonName={(name) => handleGetPokemonName(name, card.apiID)}
 						key={card.pokemonName}
 						onClick={() => {
-							handleSaveClickAndShuffle(i);
+							handleSaveClickAndShuffle(card.pokemonName);
 						}}
 					></Card>
 				);
