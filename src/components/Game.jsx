@@ -25,7 +25,7 @@ export default function Game() {
 	useEffect(() => {
 		if (cards.length === 0) {
 			const existingNumbers = new Set(uniqueNumbers);
-			const initialCards = [...Array(5)].map((_, i) => {
+			const initialCards = [...Array(20)].map((_, i) => {
 				const uniqueNumber = getRandomNumber(1000, existingNumbers);
 				existingNumbers.add(uniqueNumber);
 				return { apiID: uniqueNumber, pokemonName: `TempName_${uniqueNumber}` };
@@ -51,7 +51,6 @@ export default function Game() {
 	const saveClick = (pokemon) => {
 		setClickedCards((prevClickedCards) => {
 			const newClickedCards = [...prevClickedCards, pokemon];
-			// console.log(newClickedCards);
 			return newClickedCards;
 		});
 	};
@@ -60,7 +59,10 @@ export default function Game() {
 		const uniquePokemon = new Set(clickedCards);
 		if (uniquePokemon.size < clickedCards.length) {
 			console.log("game over");
-		} else if (clickedCards.length === cards.length) {
+		} else if (
+			clickedCards.length === cards.length &&
+			clickedCards.length > 0
+		) {
 			console.log("game win");
 		}
 	};
@@ -75,7 +77,6 @@ export default function Game() {
 	const handleSaveClickAndShuffle = (pokemon) => {
 		saveClick(pokemon);
 		handleShuffle();
-		// console.log(cards);
 	};
 	return (
 		<div className="row gap-4 text-center justify-content-center">
