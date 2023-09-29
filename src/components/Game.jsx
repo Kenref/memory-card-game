@@ -22,20 +22,25 @@ export default function Game() {
 	const [clickedCards, setClickedCards] = useState([]);
 	const [uniqueNumbers, setUniqueNumbers] = useState(new Set());
 
-	// generating the initial cards
 	useEffect(() => {
-		const existingNumbers = new Set(uniqueNumbers);
-		const initialCards = [...Array(5)].map((_, i) => {
-			const uniqueNumber = getRandomNumber(1000, existingNumbers);
-			existingNumbers.add(uniqueNumber);
-			return { apiID: uniqueNumber, pokemonName: null };
-		});
-		setCards(initialCards);
-		setUniqueNumbers(existingNumbers);
+		if (cards.length === 0) {
+			const existingNumbers = new Set(uniqueNumbers);
+			const initialCards = [...Array(5)].map((_, i) => {
+				const uniqueNumber = getRandomNumber(1000, existingNumbers);
+				existingNumbers.add(uniqueNumber);
+				return { apiID: uniqueNumber, pokemonName: null };
+			});
+			setCards(initialCards);
+			setUniqueNumbers(existingNumbers);
+		}
 	}, []);
 
-	const handleGetPokemonName = (pokemonName) => {
-		console.log(pokemonName);
+	const handleGetPokemonName = (pokemonName, apiID) => {
+		setCards((prevCards) =>
+			prevCards.map((card) =>
+				card.apiID === apiID ? { ...card, pokemonName } : card
+			)
+		);
 	};
 
 	const handleShuffle = () => {
@@ -60,17 +65,16 @@ export default function Game() {
 		handleShuffle();
 		saveClick(apiID);
 		checkDuplicate(clickedCards);
+		console.log(cards);
 	};
-	console.log(cards);
 	return (
 		<div className="row gap-4 text-center justify-content-center">
 			{cards.map((card, i) => {
-				// console.log(i);
 				return (
 					<Card
 						pokemonApiID={card.apiID}
-						getPokemonName={handleGetPokemonName}
-						key={i}
+						getPokemonName={(name) => handleGetPokemonName(name, card.apiID)}
+						key={card.pokemonName}
 						onClick={() => {
 							handleSaveClickAndShuffle(i);
 						}}

@@ -27,7 +27,7 @@ export default function Card({ pokemonApiID, onClick, getPokemonName }) {
 				);
 				// window.location.reload();
 			});
-	}, [pokemonApiID, getPokemonName]);
+	}, [pokemonApiID]);
 
 	return (
 		<div
