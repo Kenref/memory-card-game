@@ -1,8 +1,6 @@
 import { useState } from "react";
 
-export default function Header() {
-	const [score, setScore] = useState(0);
-	const [highScore, setHighScore] = useState(0);
+export default function Header({ score, highScore }) {
 	return (
 		<header>
 			<div className="row">

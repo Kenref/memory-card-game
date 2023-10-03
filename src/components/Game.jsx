@@ -25,7 +25,7 @@ export default function Game() {
 	useEffect(() => {
 		if (cards.length === 0) {
 			const existingNumbers = new Set(uniqueNumbers);
-			const initialCards = [...Array(20)].map((_, i) => {
+			const initialCards = [...Array(10)].map((_, i) => {
 				const uniqueNumber = getRandomNumber(1000, existingNumbers);
 				existingNumbers.add(uniqueNumber);
 				return { apiID: uniqueNumber, pokemonName: `TempName_${uniqueNumber}` };
@@ -67,17 +67,15 @@ export default function Game() {
 		}
 	};
 
-	const addScore = () => {};
-
 	useEffect(() => {
 		checkGameResult(clickedCards);
 		console.log(clickedCards);
 	}, [clickedCards]);
 
-	const handleSaveClickAndShuffle = (pokemon) => {
-		saveClick(pokemon);
-		handleShuffle();
-	};
+	// const handleCardClick = (pokemon) => {
+	// 	saveClick(pokemon);
+	// 	handleShuffle();
+	// };
 	return (
 		<div className="row gap-4 text-center justify-content-center">
 			{cards.map((card, i) => {
@@ -87,7 +85,8 @@ export default function Game() {
 						getPokemonName={(name) => handleGetPokemonName(name, card.apiID)}
 						key={card.pokemonName}
 						onClick={() => {
-							handleSaveClickAndShuffle(card.pokemonName);
+							saveClick(card.pokemonName);
+							handleShuffle();
 						}}
 					></Card>
 				);
