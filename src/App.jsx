@@ -3,18 +3,24 @@ import Header from "./components/Header";
 import Game from "./components/Game";
 
 export default function App() {
-	const [gameStatus, setGameStatus] = useState("running");
+	const [gameState, setGameState] = useState("running");
 	const [score, setScore] = useState(0);
 	const [highScore, setHighScore] = useState(0);
 
 	const incrementScore = () => {
-		setScore(score + 1);
+		if (gameState === "running") {
+			setScore((prevScore) => prevScore + 1);
+		}
+	};
+
+	const setGameOver = () => {
+		setGameState("over");
 	};
 
 	return (
 		<div className="container">
 			<Header score={score} highScore={highScore}></Header>
-			<Game incrementScore={incrementScore} setHighScore={setHighScore}></Game>
+			<Game incrementScore={incrementScore} setGameOver={setGameOver}></Game>
 		</div>
 	);
 }

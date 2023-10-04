@@ -17,7 +17,7 @@ function shuffleCards(array) {
 	}
 	return array;
 }
-export default function Game() {
+export default function Game({ incrementScore, setGameOver }) {
 	const [cards, setCards] = useState([]);
 	const [clickedCards, setClickedCards] = useState([]);
 	const [uniqueNumbers, setUniqueNumbers] = useState(new Set());
@@ -59,11 +59,13 @@ export default function Game() {
 		const uniquePokemon = new Set(clickedCards);
 		if (uniquePokemon.size < clickedCards.length) {
 			console.log("game over");
+			setGameOver();
 		} else if (
 			clickedCards.length === cards.length &&
 			clickedCards.length > 0
 		) {
 			console.log("game win");
+			setGameOver();
 		}
 	};
 
@@ -72,10 +74,6 @@ export default function Game() {
 		console.log(clickedCards);
 	}, [clickedCards]);
 
-	// const handleCardClick = (pokemon) => {
-	// 	saveClick(pokemon);
-	// 	handleShuffle();
-	// };
 	return (
 		<div className="row gap-4 text-center justify-content-center">
 			{cards.map((card, i) => {
@@ -86,6 +84,7 @@ export default function Game() {
 						key={card.pokemonName}
 						onClick={() => {
 							saveClick(card.pokemonName);
+							incrementScore();
 							handleShuffle();
 						}}
 					></Card>
