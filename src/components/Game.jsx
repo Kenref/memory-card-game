@@ -17,12 +17,21 @@ function shuffleCards(array) {
 	}
 	return array;
 }
-export default function Game({ incrementScore, setGameOver }) {
+export default function Game({ incrementScore, setGameOver, gameState }) {
 	const [cards, setCards] = useState([]);
 	const [clickedCards, setClickedCards] = useState([]);
 	const [uniqueNumbers, setUniqueNumbers] = useState(new Set());
 
 	useEffect(() => {
+		initialiseCards();
+	}, []);
+
+	useEffect(() => {
+		checkGameResult(clickedCards);
+		console.log(clickedCards);
+	}, [clickedCards]);
+
+	const initialiseCards = () => {
 		if (cards.length === 0) {
 			const existingNumbers = new Set(uniqueNumbers);
 			const initialCards = [...Array(10)].map((_, i) => {
@@ -33,7 +42,7 @@ export default function Game({ incrementScore, setGameOver }) {
 			setCards(initialCards);
 			setUniqueNumbers(existingNumbers);
 		}
-	}, []);
+	};
 
 	const handleGetPokemonName = (pokemonName, apiID) => {
 		setCards((prevCards) =>
@@ -57,6 +66,7 @@ export default function Game({ incrementScore, setGameOver }) {
 
 	const checkGameResult = (clickedCards) => {
 		const uniquePokemon = new Set(clickedCards);
+		console.log(uniquePokemon.size, clickedCards.length);
 		if (uniquePokemon.size < clickedCards.length) {
 			console.log("game over");
 			setGameOver();
@@ -69,10 +79,16 @@ export default function Game({ incrementScore, setGameOver }) {
 		}
 	};
 
-	useEffect(() => {
-		checkGameResult(clickedCards);
-		console.log(clickedCards);
-	}, [clickedCards]);
+	const handleCardClick = (card) => {
+		if (gameState === "running") {
+			saveClick(card.pokemonName);
+			checkGameResult(clickedCards);
+			if (gameState === "running") {
+				incrementScore();
+				handleShuffle();
+			}
+		}
+	};
 
 	return (
 		<div className="row gap-4 text-center justify-content-center">
@@ -83,9 +99,7 @@ export default function Game({ incrementScore, setGameOver }) {
 						getPokemonName={(name) => handleGetPokemonName(name, card.apiID)}
 						key={card.pokemonName}
 						onClick={() => {
-							saveClick(card.pokemonName);
-							incrementScore();
-							handleShuffle();
+							handleCardClick(card);
 						}}
 					></Card>
 				);
