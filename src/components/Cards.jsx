@@ -31,11 +31,12 @@ export default function Card({ pokemonApiID, onClick, getPokemonName }) {
 
 	return (
 		<div
-			className="card border border-primary border-3 col-2"
+			className="col-2"
+			style={{ backgroundColor: "transparent", cursor: "pointer" }}
 			onClick={onClick}
 		>
-			<img className="card-img-top" src={imageURL} alt={altText} />
-			<h4 className="card-title">{cardName}</h4>
+			<img src={imageURL} alt={altText} />
+			<h4>{cardName}</h4>
 		</div>
 	);
 }

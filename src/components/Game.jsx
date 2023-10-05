@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Card from "./Cards";
+import PropTypes from "prop-types";
 
 function getRandomNumber(number, existingNumbers) {
 	let returnValue;
@@ -17,15 +18,21 @@ function shuffleCards(array) {
 	}
 	return array;
 }
-export default function Game({ incrementScore, setGameOver, gameState }) {
+export default function Game({
+	incrementScore,
+	setGameOver,
+	gameState,
+	style = {},
+	className = {},
+}) {
 	const [cards, setCards] = useState([]);
 	const [clickedCards, setClickedCards] = useState([]);
 	const [uniqueNumbers, setUniqueNumbers] = useState(new Set());
 	const [gameDifficulty, setGameDifficulty] = useState({
-		easy: 5,
-		medium: 10,
-		hard: 15,
-		hardest: 20,
+		easy: 6,
+		medium: 12,
+		hard: 18,
+		hardest: 24,
 	});
 
 	useEffect(() => {
@@ -35,7 +42,7 @@ export default function Game({ incrementScore, setGameOver, gameState }) {
 	const initialiseCards = () => {
 		if (cards.length === 0) {
 			const existingNumbers = new Set(uniqueNumbers);
-			const initialCards = [...Array(gameDifficulty.easy)].map((_, i) => {
+			const initialCards = [...Array(gameDifficulty.hardest)].map((_, i) => {
 				const uniqueNumber = getRandomNumber(1000, existingNumbers);
 				existingNumbers.add(uniqueNumber);
 				return { apiID: uniqueNumber, pokemonName: `TempName_${uniqueNumber}` };
@@ -67,8 +74,6 @@ export default function Game({ incrementScore, setGameOver, gameState }) {
 
 	const checkGameResult = (clickedCardsSnapshot) => {
 		const uniquePokemon = new Set(clickedCardsSnapshot);
-		console.log(clickedCardsSnapshot.length, cards.length);
-
 		if (uniquePokemon.size < clickedCardsSnapshot.length) {
 			console.log("game lose");
 			setGameOver();
@@ -100,8 +105,8 @@ export default function Game({ incrementScore, setGameOver, gameState }) {
 	};
 
 	return (
-		<div className="row gap-4 text-center justify-content-center">
-			{cards.map((card, i) => {
+		<div className={className} style={style}>
+			{cards.map((card) => {
 				return (
 					<Card
 						pokemonApiID={card.apiID}
@@ -116,3 +121,11 @@ export default function Game({ incrementScore, setGameOver, gameState }) {
 		</div>
 	);
 }
+
+Game.propTypes = {
+	incrementScore: PropTypes.func,
+	setGameOver: PropTypes.func,
+	gameState: PropTypes.string,
+	style: PropTypes.object,
+	className: PropTypes.string,
+};

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Game from "./components/Game";
+import "./app.css";
 
 export default function App() {
 	const [gameState, setGameState] = useState("running");
@@ -31,16 +32,28 @@ export default function App() {
 	}, [score, setLocalStorageHighScore]);
 
 	return (
-		<div className="container">
-			<Header score={score} highScore={highScore}></Header>
+		<div
+			className="border border-4"
+			style={{
+				backgroundImage: "url(/bg.webp)",
+				backgroundSize: "cover",
+				backgroundRepeat: "no-repeat",
+				height: "100vh",
+			}}
+		>
+			<Header score={score} highScore={highScore} style={{}} />
 			<Game
 				incrementScore={incrementScore}
 				setGameOver={setGameOver}
 				gameState={gameState}
-			></Game>
+				className={"row text-center"}
+			/>
 		</div>
 	);
 }
-
-// need a way to change score to high score if score is higher than high score
-// then after that store it into local storage.
+// style={{
+// 	backgroundImage: "url(/bg.webp)",
+// 	backgroundSize: "cover",
+// 	backgroundRepeat: "no-repeat",
+// 	height: "100vh",
+// }}
