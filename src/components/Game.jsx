@@ -21,6 +21,12 @@ export default function Game({ incrementScore, setGameOver, gameState }) {
 	const [cards, setCards] = useState([]);
 	const [clickedCards, setClickedCards] = useState([]);
 	const [uniqueNumbers, setUniqueNumbers] = useState(new Set());
+	const [gameDifficulty, setGameDifficulty] = useState({
+		easy: 5,
+		medium: 10,
+		hard: 15,
+		hardest: 20,
+	});
 
 	useEffect(() => {
 		initialiseCards();
@@ -29,7 +35,7 @@ export default function Game({ incrementScore, setGameOver, gameState }) {
 	const initialiseCards = () => {
 		if (cards.length === 0) {
 			const existingNumbers = new Set(uniqueNumbers);
-			const initialCards = [...Array(10)].map((_, i) => {
+			const initialCards = [...Array(gameDifficulty.easy)].map((_, i) => {
 				const uniqueNumber = getRandomNumber(1000, existingNumbers);
 				existingNumbers.add(uniqueNumber);
 				return { apiID: uniqueNumber, pokemonName: `TempName_${uniqueNumber}` };
@@ -61,27 +67,31 @@ export default function Game({ incrementScore, setGameOver, gameState }) {
 
 	const checkGameResult = (clickedCardsSnapshot) => {
 		const uniquePokemon = new Set(clickedCardsSnapshot);
-		console.log(uniquePokemon.size, clickedCardsSnapshot.length);
+		console.log(clickedCardsSnapshot.length, cards.length);
+
 		if (uniquePokemon.size < clickedCardsSnapshot.length) {
 			console.log("game lose");
 			setGameOver();
-			return false;
+			return 1;
 		} else if (
 			clickedCardsSnapshot.length === cards.length &&
 			clickedCardsSnapshot.length > 0
 		) {
 			console.log("game win");
 			setGameOver();
-			return false;
+			return 2;
 		}
-		return true;
+		return 3;
 	};
 
 	const handleCardClick = (card) => {
 		if (gameState === "running") {
 			// create copy of clicked cards to check result based clicked cards snapshot
 			const clickedCardsSnapshot = [...clickedCards, card.pokemonName];
-			if (checkGameResult(clickedCardsSnapshot)) {
+			if (
+				checkGameResult(clickedCardsSnapshot) === 3 ||
+				checkGameResult(clickedCardsSnapshot) === 2
+			) {
 				saveClick(card.pokemonName);
 				incrementScore();
 				handleShuffle();
