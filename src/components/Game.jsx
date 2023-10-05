@@ -26,11 +26,6 @@ export default function Game({ incrementScore, setGameOver, gameState }) {
 		initialiseCards();
 	}, []);
 
-	useEffect(() => {
-		checkGameResult(clickedCards);
-		console.log(clickedCards);
-	}, [clickedCards]);
-
 	const initialiseCards = () => {
 		if (cards.length === 0) {
 			const existingNumbers = new Set(uniqueNumbers);
@@ -64,26 +59,30 @@ export default function Game({ incrementScore, setGameOver, gameState }) {
 		});
 	};
 
-	const checkGameResult = (clickedCards) => {
-		const uniquePokemon = new Set(clickedCards);
-		console.log(uniquePokemon.size, clickedCards.length);
-		if (uniquePokemon.size < clickedCards.length) {
-			console.log("game over");
+	const checkGameResult = (clickedCardsSnapshot) => {
+		const uniquePokemon = new Set(clickedCardsSnapshot);
+		console.log(uniquePokemon.size, clickedCardsSnapshot.length);
+		if (uniquePokemon.size < clickedCardsSnapshot.length) {
+			console.log("game lose");
 			setGameOver();
+			return false;
 		} else if (
-			clickedCards.length === cards.length &&
-			clickedCards.length > 0
+			clickedCardsSnapshot.length === cards.length &&
+			clickedCardsSnapshot.length > 0
 		) {
 			console.log("game win");
 			setGameOver();
+			return false;
 		}
+		return true;
 	};
 
 	const handleCardClick = (card) => {
 		if (gameState === "running") {
-			saveClick(card.pokemonName);
-			checkGameResult(clickedCards);
-			if (gameState === "running") {
+			// create copy of clicked cards to check result based clicked cards snapshot
+			const clickedCardsSnapshot = [...clickedCards, card.pokemonName];
+			if (checkGameResult(clickedCardsSnapshot)) {
+				saveClick(card.pokemonName);
 				incrementScore();
 				handleShuffle();
 			}
