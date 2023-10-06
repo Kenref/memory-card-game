@@ -33,7 +33,7 @@ export default function App() {
 
 	return (
 		<div
-			className="border border-4"
+			className="custom-bg "
 			style={{
 				backgroundImage: "url(/bg.webp)",
 				backgroundSize: "cover",
@@ -41,19 +41,31 @@ export default function App() {
 				height: "100vh",
 			}}
 		>
-			<Header score={score} highScore={highScore} style={{}} />
-			<Game
-				incrementScore={incrementScore}
-				setGameOver={setGameOver}
-				gameState={gameState}
-				className={"row text-center"}
-			/>
+			<div
+				className=" custom-bg"
+				style={{
+					minWidth: "500px",
+				}}
+			>
+				<Header
+					score={score}
+					highScore={highScore}
+					style={{ fontFamily: "Bangers, sans serif", maxWidth: "1200px" }}
+					className={"py-2 fs-5 mx-auto "}
+				/>
+				<Game
+					incrementScore={incrementScore}
+					setGameOver={setGameOver}
+					gameState={gameState}
+					className={
+						"row text-center gap-sm-1 gap-md-2 gap-lg-3 gap-xl-4  justify-content-center mx-auto"
+					}
+					style={{
+						fontFamily: "Gill Sans, sans serif",
+						maxWidth: "1200px",
+					}}
+				/>
+			</div>
 		</div>
 	);
 }
-// style={{
-// 	backgroundImage: "url(/bg.webp)",
-// 	backgroundSize: "cover",
-// 	backgroundRepeat: "no-repeat",
-// 	height: "100vh",
-// }}

@@ -29,10 +29,10 @@ export default function Game({
 	const [clickedCards, setClickedCards] = useState([]);
 	const [uniqueNumbers, setUniqueNumbers] = useState(new Set());
 	const [gameDifficulty, setGameDifficulty] = useState({
-		easy: 6,
-		medium: 12,
-		hard: 18,
-		hardest: 24,
+		easy: 5,
+		medium: 10,
+		hard: 15,
+		hardest: 20,
 	});
 
 	useEffect(() => {

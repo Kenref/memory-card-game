@@ -8,15 +8,14 @@ export default function Header({
 }) {
 	return (
 		<header style={style} className={className}>
-			<div className="row">
-				<div className="col-9">
-					<h1>Memory card game</h1>
-					<p>
-						Get points by clicking on unique cards, but do not click on any more
-						than once
-					</p>
+			<div
+				className="row container"
+				style={{ minWidth: "450px", maxWidth: "1200px" }}
+			>
+				<div className="col">
+					<img src="logo.png" alt="" className="img-fluid" />
 				</div>
-				<div className="col-3 text-end">
+				<div className="col text-end pt-4">
 					<p>Score: {score}</p>
 					<p>High Score: {highScore}</p>
 				</div>
