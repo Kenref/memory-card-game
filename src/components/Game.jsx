@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import Card from "./Cards";
 import PropTypes from "prop-types";
 
-function getRandomNumber(number, existingNumbers) {
+function getRandomNumber(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getUniqueNumber(number, existingNumbers) {
 	let returnValue;
 	do {
-		returnValue = Math.floor(Math.random() * number) + 1;
+		returnValue = getRandomNumber(1, number);
 	} while (existingNumbers.has(returnValue));
 	return returnValue;
 }
@@ -18,6 +22,7 @@ function shuffleCards(array) {
 	}
 	return array;
 }
+
 export default function Game({
 	incrementScore,
 	setGameOver,
@@ -44,7 +49,7 @@ export default function Game({
 		if (cards.length === 0) {
 			const existingNumbers = new Set(uniqueNumbers);
 			const initialCards = [...Array(gameDifficulty.hardest)].map((_, i) => {
-				const uniqueNumber = getRandomNumber(1000, existingNumbers);
+				const uniqueNumber = getUniqueNumber(1000, existingNumbers);
 				existingNumbers.add(uniqueNumber);
 				return { apiID: uniqueNumber, pokemonName: `TempName_${uniqueNumber}` };
 			});
@@ -65,7 +70,7 @@ export default function Game({
 		setTimeout(() => {
 			const shuffled = shuffleCards([...cards]);
 			setCards(shuffled);
-		}, 500);
+		}, 1000);
 	};
 
 	const saveClick = (pokemon) => {
@@ -100,8 +105,8 @@ export default function Game({
 			// Wait for another second before flipping back
 			setTimeout(() => {
 				setCardFlipped(false);
-			}, 1200);
-		}, 300);
+			}, 1500);
+		}, 100);
 	};
 
 	const handleCardClick = (card) => {

@@ -36,7 +36,10 @@ export default function Card({
 	}, [pokemonApiID]);
 
 	return (
-		<div className={`col-2 custom-flip-card  ${cardFlipped ? "flipped" : ""}`}>
+		<div
+			className={`col-2 custom-flip-card ${cardFlipped ? "flipped" : ""}`}
+			style={{ maxHeight: "210px" }}
+		>
 			<div
 				className="custom-card-front card"
 				style={{
@@ -52,7 +55,7 @@ export default function Card({
 				<img
 					src="cardback.png"
 					alt="Pokemon card back"
-					style={{ objectFit: "contain", width: "100%", height: "100%" }}
+					style={{ width: "100%", height: "100%" }}
 				/>
 			</div>
 		</div>
@@ -63,6 +66,7 @@ Card.propTypes = {
 	pokemonApiID: PropTypes.number.isRequired,
 	onClick: PropTypes.func.isRequired,
 	getPokemonName: PropTypes.func.isRequired,
+	cardFlipped: PropTypes.bool.isRequired,
 };
 
 //TODO when the game is finished opeen a modal - look at built in bootstrap modals

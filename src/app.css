@@ -1,3 +1,5 @@
+/* Card flipping effect */
+
 .custom-flip-card {
 	position: relative;
 	transition: transform 1s;
@@ -21,7 +23,7 @@
 	transform: rotateY(180deg);
 }
 
-/* before */
+/* Card shake on hover */
 
 .custom-card-front .custom-img {
 	transform-origin: 0 0;
