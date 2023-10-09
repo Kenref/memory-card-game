@@ -58,11 +58,12 @@ export default function App() {
 					setGameOver={setGameOver}
 					gameState={gameState}
 					className={
-						"row text-center gap-sm-1 gap-md-2 gap-lg-3 gap-xl-4  justify-content-center mx-auto"
+						"row text-center gap-sm-1 gap-md-2 gap-lg-3 gap-xl-4 justify-content-center mx-auto"
 					}
 					style={{
 						fontFamily: "Gill Sans, sans serif",
 						maxWidth: "1200px",
+						perspective: "1000px",
 					}}
 				/>
 			</div>

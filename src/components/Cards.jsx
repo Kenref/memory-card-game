@@ -6,7 +6,12 @@ function capitalise(word) {
 	return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-export default function Card({ pokemonApiID, onClick, getPokemonName }) {
+export default function Card({
+	pokemonApiID,
+	onClick,
+	getPokemonName,
+	cardFlipped,
+}) {
 	const [cardName, setCardName] = useState("Card Name");
 	const [imageURL, setImageURL] = useState(null);
 	const altText = `${cardName} sprite`;
@@ -31,16 +36,25 @@ export default function Card({ pokemonApiID, onClick, getPokemonName }) {
 	}, [pokemonApiID]);
 
 	return (
-		<div
-			className=" col-2 border border-warning custom-card card"
-			style={{
-				backgroundColor: "rgba(0, 0, 0, 0.3)",
-				cursor: "pointer",
-			}}
-			onClick={onClick}
-		>
-			<img src={imageURL} alt={altText} className="custom-img" />
-			<h4 className="fs-4">{cardName}</h4>
+		<div className={`col-2 custom-flip-card  ${cardFlipped ? "flipped" : ""}`}>
+			<div
+				className="custom-card-front card"
+				style={{
+					backgroundColor: "rgba(0, 0, 0, 0.3)",
+					cursor: "pointer",
+				}}
+				onClick={onClick}
+			>
+				<img src={imageURL} alt={altText} className="custom-img" />
+				<h4 className="fs-4">{cardName}</h4>
+			</div>
+			<div className="custom-card-back">
+				<img
+					src="cardback.png"
+					alt="Pokemon card back"
+					style={{ objectFit: "contain", width: "100%", height: "100%" }}
+				/>
+			</div>
 		</div>
 	);
 }
@@ -52,3 +66,21 @@ Card.propTypes = {
 };
 
 //TODO when the game is finished opeen a modal - look at built in bootstrap modals
+
+// 	return (
+// 		<div className="custom-flip-card col-2">
+// 			<div
+// 				className="custom-card-front card"
+// 				style={{
+// 					backgroundColor: "rgba(0, 0, 0, 0.3)",
+// 					cursor: "pointer",
+// 				}}
+// 				onClick={onClick}
+// 			>
+// 				<img src={imageURL} alt={altText} className="custom-img" />
+// 				<h4 className="fs-4">{cardName}</h4>
+// 			</div>
+// 			<div className="custom-card-back"></div>
+// 		</div>
+// 	);
+// }

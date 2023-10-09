@@ -28,6 +28,7 @@ export default function Game({
 	const [cards, setCards] = useState([]);
 	const [clickedCards, setClickedCards] = useState([]);
 	const [uniqueNumbers, setUniqueNumbers] = useState(new Set());
+	const [cardFlipped, setCardFlipped] = useState(false);
 	const [gameDifficulty, setGameDifficulty] = useState({
 		easy: 5,
 		medium: 10,
@@ -61,8 +62,10 @@ export default function Game({
 	};
 
 	const handleShuffle = () => {
-		const shuffled = shuffleCards([...cards]);
-		setCards(shuffled);
+		setTimeout(() => {
+			const shuffled = shuffleCards([...cards]);
+			setCards(shuffled);
+		}, 500);
 	};
 
 	const saveClick = (pokemon) => {
@@ -89,8 +92,22 @@ export default function Game({
 		return 3;
 	};
 
+	const handleFlip = () => {
+		// Wait for half a second before flipping
+		setTimeout(() => {
+			setCardFlipped(true);
+
+			// Wait for another second before flipping back
+			setTimeout(() => {
+				setCardFlipped(false);
+			}, 1200);
+		}, 300);
+	};
+
 	const handleCardClick = (card) => {
 		if (gameState === "running") {
+			handleFlip();
+
 			// create copy of clicked cards to check result based clicked cards snapshot
 			const clickedCardsSnapshot = [...clickedCards, card.pokemonName];
 			if (
@@ -112,6 +129,7 @@ export default function Game({
 						pokemonApiID={card.apiID}
 						getPokemonName={(name) => handleGetPokemonName(name, card.apiID)}
 						key={card.pokemonName}
+						cardFlipped={cardFlipped}
 						onClick={() => {
 							handleCardClick(card);
 						}}
