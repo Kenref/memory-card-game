@@ -33,12 +33,13 @@ export default function App() {
 
 	return (
 		<div
-			className="custom-bg "
 			style={{
 				backgroundImage: "url(/bg.webp)",
 				backgroundSize: "cover",
 				backgroundRepeat: "no-repeat",
 				height: "100vh",
+				width: "100vw",
+				overflow: "hidden",
 			}}
 		>
 			<div

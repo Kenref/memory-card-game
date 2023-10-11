@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Card from "./Cards";
+import GameStartModal from "./GameStartModal";
 import PropTypes from "prop-types";
+import * as bootstrap from "bootstrap";
 
 function getRandomNumber(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -40,15 +42,29 @@ export default function Game({
 		hard: 15,
 		hardest: 20,
 	});
+	const modalRef = useRef(null);
 
 	useEffect(() => {
-		initialiseCards();
+		// initialiseCards(gameDifficulty.medium);
+		if (modalRef.current) {
+			const startModal = new bootstrap.Modal(modalRef.current);
+			startModal.show();
+			return () => {
+				startModal.hide();
+			};
+		}
 	}, []);
 
-	const initialiseCards = () => {
+	const setDifficultyAndLoadCards = (difficulty) => {
+		setGameDifficulty(gameDifficulty.difficulty);
+		initialiseCards(difficulty);
+		console.log(difficulty);
+	};
+
+	const initialiseCards = (difficulty) => {
 		if (cards.length === 0) {
 			const existingNumbers = new Set(uniqueNumbers);
-			const initialCards = [...Array(gameDifficulty.hardest)].map((_, i) => {
+			const initialCards = [...Array(difficulty)].map((_, i) => {
 				const uniqueNumber = getUniqueNumber(1000, existingNumbers);
 				existingNumbers.add(uniqueNumber);
 				return { apiID: uniqueNumber, pokemonName: `TempName_${uniqueNumber}` };
@@ -105,7 +121,7 @@ export default function Game({
 			// Wait for another second before flipping back
 			setTimeout(() => {
 				setCardFlipped(false);
-			}, 1500);
+			}, 1200);
 		}, 100);
 	};
 
@@ -127,21 +143,29 @@ export default function Game({
 	};
 
 	return (
-		<div className={className} style={style}>
-			{cards.map((card) => {
-				return (
-					<Card
-						pokemonApiID={card.apiID}
-						getPokemonName={(name) => handleGetPokemonName(name, card.apiID)}
-						key={card.pokemonName}
-						cardFlipped={cardFlipped}
-						onClick={() => {
-							handleCardClick(card);
-						}}
-					></Card>
-				);
-			})}
-		</div>
+		<>
+			<GameStartModal
+				ref={modalRef}
+				gameDifficulty={gameDifficulty}
+				setGameDifficulty={setGameDifficulty}
+				setDifficultyAndLoadCards={setDifficultyAndLoadCards}
+			/>
+			<div className={className} style={style}>
+				{cards.map((card) => {
+					return (
+						<Card
+							pokemonApiID={card.apiID}
+							getPokemonName={(name) => handleGetPokemonName(name, card.apiID)}
+							key={card.pokemonName}
+							cardFlipped={cardFlipped}
+							onClick={() => {
+								handleCardClick(card);
+							}}
+						></Card>
+					);
+				})}
+			</div>
+		</>
 	);
 }
 
