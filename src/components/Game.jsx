@@ -40,7 +40,7 @@ export default function Game({
 		easy: 5,
 		medium: 10,
 		hard: 15,
-		hardest: 20,
+		impossible: 20,
 	});
 	const modalRef = useRef(null);
 
@@ -53,12 +53,11 @@ export default function Game({
 				startModal.hide();
 			};
 		}
-	}, []);
+	}, [gameDifficulty]);
 
-	const setDifficultyAndLoadCards = (difficulty) => {
-		setGameDifficulty(gameDifficulty.difficulty);
-		initialiseCards(difficulty);
-		console.log(difficulty);
+	const setDifficultyAndLoadCards = (newDifficulty) => {
+		setGameDifficulty({ ...gameDifficulty, difficulty: newDifficulty });
+		initialiseCards(newDifficulty);
 	};
 
 	const initialiseCards = (difficulty) => {
@@ -147,7 +146,6 @@ export default function Game({
 			<GameStartModal
 				ref={modalRef}
 				gameDifficulty={gameDifficulty}
-				setGameDifficulty={setGameDifficulty}
 				setDifficultyAndLoadCards={setDifficultyAndLoadCards}
 			/>
 			<div className={className} style={style}>
