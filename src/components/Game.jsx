@@ -53,7 +53,7 @@ export default function Game({
 				startModal.hide();
 			};
 		}
-	}, [gameDifficulty]);
+	}, []);
 
 	const setDifficultyAndLoadCards = (newDifficulty) => {
 		setGameDifficulty({ ...gameDifficulty, difficulty: newDifficulty });
