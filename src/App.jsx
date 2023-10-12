@@ -58,6 +58,7 @@ export default function App() {
 					incrementScore={incrementScore}
 					setGameOver={setGameOver}
 					gameState={gameState}
+					setGameState={setGameState}
 					className={
 						"row text-center gap-sm-1 gap-md-2 gap-lg-3 gap-xl-4 justify-content-center mx-auto"
 					}

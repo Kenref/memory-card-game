@@ -29,6 +29,7 @@ export default function Game({
 	incrementScore,
 	setGameOver,
 	gameState,
+	setGameState,
 	style = {},
 	className = {},
 }) {
@@ -42,21 +43,31 @@ export default function Game({
 		hard: 15,
 		impossible: 20,
 	});
+	//Dom modal ref
 	const modalRef = useRef(null);
+	//bootstrap modal ref
+	const modalInstanceRef = useRef(null);
 
+	// Initialize the modal instance only once
 	useEffect(() => {
-		if (modalRef.current) {
-			const startModal = new bootstrap.Modal(modalRef.current);
-			startModal.show();
-			return () => {
-				startModal.hide();
-			};
+		if (modalRef.current && !modalInstanceRef.current) {
+			modalInstanceRef.current = new bootstrap.Modal(modalRef.current);
+			modalInstanceRef.current.show();
 		}
 	}, []);
 
+	// Show the modal when the game state changes
+	useEffect(() => {
+		if (gameState === "over" && modalInstanceRef.current) {
+			modalInstanceRef.current.show();
+		}
+	}, [gameState]);
+
 	const setDifficultyAndLoadCards = (newDifficulty) => {
+		console.log("Setting difficulty to:", newDifficulty);
 		setGameDifficulty({ ...gameDifficulty, difficulty: newDifficulty });
 		initialiseCards(newDifficulty);
+		// console.log("Cards after initialisation:", cards);
 	};
 
 	const initialiseCards = (difficulty) => {
@@ -99,16 +110,16 @@ export default function Game({
 		if (uniquePokemon.size < clickedCardsSnapshot.length) {
 			console.log("game lose");
 			setGameOver();
-			return 1;
+			return "lose";
 		} else if (
 			clickedCardsSnapshot.length === cards.length &&
 			clickedCardsSnapshot.length > 0
 		) {
 			console.log("game win");
 			setGameOver();
-			return 2;
+			return "win";
 		}
-		return 3;
+		return "continue";
 	};
 
 	const handleFlip = () => {
@@ -128,8 +139,8 @@ export default function Game({
 			// create copy of clicked cards to check result based clicked cards snapshot
 			const clickedCardsSnapshot = [...clickedCards, card.pokemonName];
 			if (
-				checkGameResult(clickedCardsSnapshot) === 3 ||
-				checkGameResult(clickedCardsSnapshot) === 2
+				checkGameResult(clickedCardsSnapshot) === "continue" ||
+				checkGameResult(clickedCardsSnapshot) === "win"
 			) {
 				saveClick(card.pokemonName);
 				incrementScore();
@@ -138,6 +149,11 @@ export default function Game({
 			}
 		}
 	};
+
+	//TODO need to make the modal open again when game is won or lost
+	//TODO need to make it so that the modal will display you win or you lose depending on result
+	// tell the user their final score when game over
+	//resettting the game - gamestate, score, clickedcards,
 
 	return (
 		<>
@@ -148,6 +164,8 @@ export default function Game({
 				handleFlip={handleFlip}
 				modalTitle="Instructions"
 				modalBody="Select each Pokemon to win. Select any twice and you lose."
+				gameState={gameState}
+				setGameState={setGameState}
 			/>
 			<div className={className} style={style}>
 				{cards.map((card) => {
@@ -172,6 +190,7 @@ Game.propTypes = {
 	incrementScore: PropTypes.func,
 	setGameOver: PropTypes.func,
 	gameState: PropTypes.string,
+	setGameState: PropTypes.func,
 	style: PropTypes.object,
 	className: PropTypes.string,
 };

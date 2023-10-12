@@ -10,7 +10,21 @@ const GameModal = forwardRef((props, ref) => {
 		handleFlip,
 		modalTitle,
 		modalBody,
+		gameState,
+		setGameState,
 	} = props;
+
+	useEffect(() => {}, [gameState]);
+
+	const onButtonClick = (difficulty) => {
+		setDifficultyAndLoadCards(difficulty);
+		handleFlip();
+		console.log(gameState);
+		if (gameState !== "running") {
+			setGameState("running");
+		}
+		//TODO put reinitialisse game here
+	};
 
 	return (
 		<div
@@ -46,8 +60,7 @@ const GameModal = forwardRef((props, ref) => {
 							className="btn btn-primary col-2"
 							data-bs-dismiss="modal"
 							onClick={() => {
-								setDifficultyAndLoadCards(gameDifficulty.easy);
-								handleFlip();
+								onButtonClick(gameDifficulty.easy);
 							}}
 						>
 							Easy
@@ -57,8 +70,7 @@ const GameModal = forwardRef((props, ref) => {
 							className="btn btn-success col-2"
 							data-bs-dismiss="modal"
 							onClick={() => {
-								setDifficultyAndLoadCards(gameDifficulty.medium);
-								handleFlip();
+								onButtonClick(gameDifficulty.medium);
 							}}
 						>
 							Medium
@@ -68,8 +80,7 @@ const GameModal = forwardRef((props, ref) => {
 							className="btn btn-warning col-2"
 							data-bs-dismiss="modal"
 							onClick={() => {
-								setDifficultyAndLoadCards(gameDifficulty.hard);
-								handleFlip();
+								onButtonClick(gameDifficulty.hard);
 							}}
 						>
 							Hard
@@ -79,8 +90,7 @@ const GameModal = forwardRef((props, ref) => {
 							className="btn btn-danger col-3"
 							data-bs-dismiss="modal"
 							onClick={() => {
-								setDifficultyAndLoadCards(gameDifficulty.impossible);
-								handleFlip();
+								onButtonClick(gameDifficulty.impossible);
 							}}
 						>
 							Impossible
