@@ -4,7 +4,7 @@ import React, { useEffect, useRef, forwardRef } from "react";
 import PropTypes from "prop-types";
 
 const GameStartModal = forwardRef((props, ref) => {
-	const { gameDifficulty, setDifficultyAndLoadCards } = props;
+	const { gameDifficulty, setDifficultyAndLoadCards, handleFlip } = props;
 
 	return (
 		<div className="modal modal-lg" tabIndex="-1" ref={ref}>
@@ -34,7 +34,10 @@ const GameStartModal = forwardRef((props, ref) => {
 							type="button"
 							className="btn btn-primary col-2"
 							data-bs-dismiss="modal"
-							onClick={() => setDifficultyAndLoadCards(gameDifficulty.easy)}
+							onClick={() => {
+								setDifficultyAndLoadCards(gameDifficulty.easy);
+								handleFlip();
+							}}
 						>
 							Easy
 						</button>
@@ -42,7 +45,10 @@ const GameStartModal = forwardRef((props, ref) => {
 							type="button"
 							className="btn btn-success col-2"
 							data-bs-dismiss="modal"
-							onClick={() => setDifficultyAndLoadCards(gameDifficulty.medium)}
+							onClick={() => {
+								setDifficultyAndLoadCards(gameDifficulty.medium);
+								handleFlip();
+							}}
 						>
 							Medium
 						</button>
@@ -50,7 +56,10 @@ const GameStartModal = forwardRef((props, ref) => {
 							type="button"
 							className="btn btn-warning col-2"
 							data-bs-dismiss="modal"
-							onClick={() => setDifficultyAndLoadCards(gameDifficulty.hard)}
+							onClick={() => {
+								setDifficultyAndLoadCards(gameDifficulty.hard);
+								handleFlip();
+							}}
 						>
 							Hard
 						</button>
@@ -58,9 +67,10 @@ const GameStartModal = forwardRef((props, ref) => {
 							type="button"
 							className="btn btn-danger col-3"
 							data-bs-dismiss="modal"
-							onClick={() =>
-								setDifficultyAndLoadCards(gameDifficulty.impossible)
-							}
+							onClick={() => {
+								setDifficultyAndLoadCards(gameDifficulty.impossible);
+								handleFlip();
+							}}
 						>
 							Impossible
 						</button>
@@ -82,4 +92,5 @@ GameStartModal.propTypes = {
 		impossible: PropTypes.number,
 	}).isRequired,
 	setDifficultyAndLoadCards: PropTypes.func.isRequired,
+	handleFlip: PropTypes.func.isRequired,
 };

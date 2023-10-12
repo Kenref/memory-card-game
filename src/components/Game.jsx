@@ -35,7 +35,7 @@ export default function Game({
 	const [cards, setCards] = useState([]);
 	const [clickedCards, setClickedCards] = useState([]);
 	const [uniqueNumbers, setUniqueNumbers] = useState(new Set());
-	const [cardFlipped, setCardFlipped] = useState(false);
+	const [cardFlipped, setCardFlipped] = useState(true);
 	const [gameDifficulty, setGameDifficulty] = useState({
 		easy: 5,
 		medium: 10,
@@ -45,7 +45,6 @@ export default function Game({
 	const modalRef = useRef(null);
 
 	useEffect(() => {
-		// initialiseCards(gameDifficulty.medium);
 		if (modalRef.current) {
 			const startModal = new bootstrap.Modal(modalRef.current);
 			startModal.show();
@@ -113,11 +112,11 @@ export default function Game({
 	};
 
 	const handleFlip = () => {
-		// Wait for half a second before flipping
+		// Wait a bit before flipping
 		setTimeout(() => {
 			setCardFlipped(true);
 
-			// Wait for another second before flipping back
+			// Wait before flipping back
 			setTimeout(() => {
 				setCardFlipped(false);
 			}, 1200);
@@ -126,8 +125,6 @@ export default function Game({
 
 	const handleCardClick = (card) => {
 		if (gameState === "running") {
-			handleFlip();
-
 			// create copy of clicked cards to check result based clicked cards snapshot
 			const clickedCardsSnapshot = [...clickedCards, card.pokemonName];
 			if (
@@ -136,6 +133,7 @@ export default function Game({
 			) {
 				saveClick(card.pokemonName);
 				incrementScore();
+				handleFlip();
 				handleShuffle();
 			}
 		}
@@ -147,6 +145,7 @@ export default function Game({
 				ref={modalRef}
 				gameDifficulty={gameDifficulty}
 				setDifficultyAndLoadCards={setDifficultyAndLoadCards}
+				handleFlip={handleFlip}
 			/>
 			<div className={className} style={style}>
 				{cards.map((card) => {
