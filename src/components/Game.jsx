@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Card from "./Cards";
-import GameStartModal from "./GameStartModal";
+import GameModal from "./GameModal";
 import PropTypes from "prop-types";
 import * as bootstrap from "bootstrap";
 
@@ -141,11 +141,13 @@ export default function Game({
 
 	return (
 		<>
-			<GameStartModal
+			<GameModal
 				ref={modalRef}
 				gameDifficulty={gameDifficulty}
 				setDifficultyAndLoadCards={setDifficultyAndLoadCards}
 				handleFlip={handleFlip}
+				modalTitle="Instructions"
+				modalBody="Select each Pokemon to win. Select any twice and you lose."
 			/>
 			<div className={className} style={style}>
 				{cards.map((card) => {

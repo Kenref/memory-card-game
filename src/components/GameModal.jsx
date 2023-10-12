@@ -3,11 +3,22 @@ import React, { useEffect, useRef, forwardRef } from "react";
 // import * as bootstrap from "bootstrap";
 import PropTypes from "prop-types";
 
-const GameStartModal = forwardRef((props, ref) => {
-	const { gameDifficulty, setDifficultyAndLoadCards, handleFlip } = props;
+const GameModal = forwardRef((props, ref) => {
+	const {
+		gameDifficulty,
+		setDifficultyAndLoadCards,
+		handleFlip,
+		modalTitle,
+		modalBody,
+	} = props;
 
 	return (
-		<div className="modal modal-lg" tabIndex="-1" ref={ref}>
+		<div
+			className="modal modal-lg"
+			data-bs-backdrop="static"
+			tabIndex="-1"
+			ref={ref}
+		>
 			<div
 				className="modal-dialog "
 				style={{
@@ -18,7 +29,7 @@ const GameStartModal = forwardRef((props, ref) => {
 			>
 				<div className="modal-content">
 					<div className="modal-header">
-						<h5 className="modal-title">Instructions</h5>
+						<h5 className="modal-title">{modalTitle}</h5>
 						<button
 							type="button"
 							className="btn-close"
@@ -27,7 +38,7 @@ const GameStartModal = forwardRef((props, ref) => {
 						></button>
 					</div>
 					<div className="modal-body">
-						<p>Select each Pokemon to win. Select any twice and you lose.</p>
+						<p>{modalBody}</p>
 					</div>
 					<div className="modal-footer justify-content-around">
 						<button
@@ -81,10 +92,10 @@ const GameStartModal = forwardRef((props, ref) => {
 	);
 });
 
-GameStartModal.displayName = "GameStartModal";
-export default GameStartModal;
+GameModal.displayName = "GameModal";
+export default GameModal;
 
-GameStartModal.propTypes = {
+GameModal.propTypes = {
 	gameDifficulty: PropTypes.shape({
 		easy: PropTypes.number,
 		medium: PropTypes.number,
