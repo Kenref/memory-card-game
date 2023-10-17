@@ -14,16 +14,12 @@ const GameModal = forwardRef((props, ref) => {
 		setGameState,
 	} = props;
 
-	useEffect(() => {}, [gameState]);
-
 	const onButtonClick = (difficulty) => {
 		setDifficultyAndLoadCards(difficulty);
 		handleFlip();
-		console.log(gameState);
 		if (gameState !== "running") {
 			setGameState("running");
 		}
-		//TODO put reinitialisse game here
 	};
 
 	return (

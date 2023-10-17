@@ -30,6 +30,7 @@ export default function Game({
 	setGameOver,
 	gameState,
 	setGameState,
+	setScore,
 	style = {},
 	className = {},
 }) {
@@ -64,23 +65,22 @@ export default function Game({
 	}, [gameState]);
 
 	const setDifficultyAndLoadCards = (newDifficulty) => {
-		console.log("Setting difficulty to:", newDifficulty);
 		setGameDifficulty({ ...gameDifficulty, difficulty: newDifficulty });
-		initialiseCards(newDifficulty);
-		// console.log("Cards after initialisation:", cards);
+		initialiseGame(newDifficulty);
 	};
 
-	const initialiseCards = (difficulty) => {
-		if (cards.length === 0) {
-			const existingNumbers = new Set(uniqueNumbers);
-			const initialCards = [...Array(difficulty)].map((_, i) => {
-				const uniqueNumber = getUniqueNumber(1000, existingNumbers);
-				existingNumbers.add(uniqueNumber);
-				return { apiID: uniqueNumber, pokemonName: `TempName_${uniqueNumber}` };
-			});
-			setCards(initialCards);
-			setUniqueNumbers(existingNumbers);
-		}
+	const initialiseGame = (difficulty) => {
+		setCards([]);
+		setClickedCards([]);
+		setScore(0);
+		const existingNumbers = new Set(uniqueNumbers);
+		const initialCards = [...Array(difficulty)].map((_, i) => {
+			const uniqueNumber = getUniqueNumber(1000, existingNumbers);
+			existingNumbers.add(uniqueNumber);
+			return { apiID: uniqueNumber, pokemonName: `TempName_${uniqueNumber}` };
+		});
+		setCards(initialCards);
+		setUniqueNumbers(existingNumbers);
 	};
 
 	const handleGetPokemonName = (pokemonName, apiID) => {
@@ -150,7 +150,6 @@ export default function Game({
 		}
 	};
 
-	//TODO need to make the modal open again when game is won or lost
 	//TODO need to make it so that the modal will display you win or you lose depending on result
 	// tell the user their final score when game over
 	//resettting the game - gamestate, score, clickedcards,
@@ -160,12 +159,15 @@ export default function Game({
 			<GameModal
 				ref={modalRef}
 				gameDifficulty={gameDifficulty}
+				setGameDifficulty={setGameDifficulty}
 				setDifficultyAndLoadCards={setDifficultyAndLoadCards}
 				handleFlip={handleFlip}
 				modalTitle="Instructions"
 				modalBody="Select each Pokemon to win. Select any twice and you lose."
 				gameState={gameState}
 				setGameState={setGameState}
+				setClickedCards={setClickedCards}
+				setCards={setCards}
 			/>
 			<div className={className} style={style}>
 				{cards.map((card) => {
