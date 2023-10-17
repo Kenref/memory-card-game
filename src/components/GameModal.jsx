@@ -21,7 +21,7 @@ const GameModal = forwardRef((props, ref) => {
 			setGameState("running");
 		}
 	};
-
+	//TODO add style to the modal
 	return (
 		<div
 			className="modal modal-lg"

@@ -67,6 +67,7 @@ export default function Game({
 		if (gameState === "over" && modalInstanceRef.current) {
 			modalInstanceRef.current.show();
 		}
+		console.log(gameState);
 	}, [gameState]);
 
 	const setDifficultyAndLoadCards = (newDifficulty) => {
@@ -124,7 +125,9 @@ export default function Game({
 		) {
 			setGameState("over");
 			setModalTitle("You Win");
-			setModalBody(`Your score was ${score}. Pick a difficulty to play again`);
+			setModalBody(
+				`Your score was ${score + 1}. Pick a difficulty to play again`
+			);
 			return "win";
 		}
 		return "continue";
@@ -134,7 +137,6 @@ export default function Game({
 		// Wait a bit before flipping
 		setTimeout(() => {
 			setCardFlipped(true);
-
 			// Wait before flipping back
 			setTimeout(() => {
 				setCardFlipped(false);
@@ -144,22 +146,23 @@ export default function Game({
 
 	const handleCardClick = (card) => {
 		if (gameState === "running") {
-			// create copy of clicked cards to check result based clicked cards snapshot
+			// create copy of clicked cards to solve state async issue
 			const clickedCardsSnapshot = [...clickedCards, card.pokemonName];
-			if (
-				checkGameResult(clickedCardsSnapshot) === "continue" ||
-				checkGameResult(clickedCardsSnapshot) === "win"
-			) {
+			if (checkGameResult(clickedCardsSnapshot) === "continue") {
 				saveClick(card.pokemonName);
 				incrementScore();
 				handleFlip();
 				handleShuffle();
+			} else if (checkGameResult(clickedCardsSnapshot) === "win") {
+				saveClick(card.pokemonName);
+				incrementScore();
+				setCardFlipped(true);
 			}
 		}
 	};
-
-	//TODO need to make the card stop flipping when the game is won
+	//TODO add prop types
 	//TODO need to make it so that cards will stay flipped until all cards are loaded
+	//TODO fix responsiveness
 
 	return (
 		<>
