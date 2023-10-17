@@ -16,10 +16,6 @@ export default function App() {
 		}
 	};
 
-	const setGameOver = () => {
-		setGameState("over");
-	};
-
 	const setLocalStorageHighScore = () => {
 		localStorage.setItem("High Score", highScore);
 	};
@@ -56,10 +52,10 @@ export default function App() {
 				/>
 				<Game
 					incrementScore={incrementScore}
-					setGameOver={setGameOver}
 					gameState={gameState}
 					setGameState={setGameState}
 					setScore={setScore}
+					score={score}
 					className={
 						"row text-center gap-sm-1 gap-md-2 gap-lg-3 gap-xl-4 justify-content-center mx-auto"
 					}

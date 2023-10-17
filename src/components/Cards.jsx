@@ -68,23 +68,3 @@ Card.propTypes = {
 	getPokemonName: PropTypes.func.isRequired,
 	cardFlipped: PropTypes.bool.isRequired,
 };
-
-//TODO when the game is finished opeen a modal - look at built in bootstrap modals
-
-// 	return (
-// 		<div className="custom-flip-card col-2">
-// 			<div
-// 				className="custom-card-front card"
-// 				style={{
-// 					backgroundColor: "rgba(0, 0, 0, 0.3)",
-// 					cursor: "pointer",
-// 				}}
-// 				onClick={onClick}
-// 			>
-// 				<img src={imageURL} alt={altText} className="custom-img" />
-// 				<h4 className="fs-4">{cardName}</h4>
-// 			</div>
-// 			<div className="custom-card-back"></div>
-// 		</div>
-// 	);
-// }

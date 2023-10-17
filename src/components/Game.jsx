@@ -31,9 +31,14 @@ export default function Game({
 	gameState,
 	setGameState,
 	setScore,
+	score,
 	style = {},
 	className = {},
 }) {
+	const [modalTitle, setModalTitle] = useState("Instructions");
+	const [modalBody, setModalBody] = useState(
+		"Select each Pokemon to win. Select any twice and you lose."
+	);
 	const [cards, setCards] = useState([]);
 	const [clickedCards, setClickedCards] = useState([]);
 	const [uniqueNumbers, setUniqueNumbers] = useState(new Set());
@@ -70,6 +75,7 @@ export default function Game({
 	};
 
 	const initialiseGame = (difficulty) => {
+		setGameState("running");
 		setCards([]);
 		setClickedCards([]);
 		setScore(0);
@@ -108,15 +114,17 @@ export default function Game({
 	const checkGameResult = (clickedCardsSnapshot) => {
 		const uniquePokemon = new Set(clickedCardsSnapshot);
 		if (uniquePokemon.size < clickedCardsSnapshot.length) {
-			console.log("game lose");
-			setGameOver();
+			setGameState("over");
+			setModalTitle("You lose");
+			setModalBody(`Your score was ${score}. Pick a difficulty to play again`);
 			return "lose";
 		} else if (
 			clickedCardsSnapshot.length === cards.length &&
 			clickedCardsSnapshot.length > 0
 		) {
-			console.log("game win");
-			setGameOver();
+			setGameState("over");
+			setModalTitle("You Win");
+			setModalBody(`Your score was ${score}. Pick a difficulty to play again`);
 			return "win";
 		}
 		return "continue";
@@ -150,9 +158,8 @@ export default function Game({
 		}
 	};
 
-	//TODO need to make it so that the modal will display you win or you lose depending on result
-	// tell the user their final score when game over
-	//resettting the game - gamestate, score, clickedcards,
+	//TODO need to make the card stop flipping when the game is won
+	//TODO need to make it so that cards will stay flipped until all cards are loaded
 
 	return (
 		<>
@@ -162,8 +169,8 @@ export default function Game({
 				setGameDifficulty={setGameDifficulty}
 				setDifficultyAndLoadCards={setDifficultyAndLoadCards}
 				handleFlip={handleFlip}
-				modalTitle="Instructions"
-				modalBody="Select each Pokemon to win. Select any twice and you lose."
+				modalTitle={modalTitle}
+				modalBody={modalBody}
 				gameState={gameState}
 				setGameState={setGameState}
 				setClickedCards={setClickedCards}
