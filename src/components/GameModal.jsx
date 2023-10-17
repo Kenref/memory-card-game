@@ -110,4 +110,8 @@ GameModal.propTypes = {
 	}).isRequired,
 	setDifficultyAndLoadCards: PropTypes.func.isRequired,
 	handleFlip: PropTypes.func.isRequired,
+	modalTitle: PropTypes.string,
+	modalBody: PropTypes.string,
+	gameState: PropTypes.string,
+	setGameState: PropTypes.func,
 };

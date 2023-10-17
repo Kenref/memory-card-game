@@ -27,7 +27,6 @@ function shuffleCards(array) {
 
 export default function Game({
 	incrementScore,
-	setGameOver,
 	gameState,
 	setGameState,
 	setScore,
@@ -67,7 +66,6 @@ export default function Game({
 		if (gameState === "over" && modalInstanceRef.current) {
 			modalInstanceRef.current.show();
 		}
-		console.log(gameState);
 	}, [gameState]);
 
 	const setDifficultyAndLoadCards = (newDifficulty) => {
@@ -160,7 +158,6 @@ export default function Game({
 			}
 		}
 	};
-	//TODO add prop types
 	//TODO need to make it so that cards will stay flipped until all cards are loaded
 	//TODO fix responsiveness
 
@@ -205,4 +202,6 @@ Game.propTypes = {
 	setGameState: PropTypes.func,
 	style: PropTypes.object,
 	className: PropTypes.string,
+	score: PropTypes.number,
+	setScore: PropTypes.func,
 };
