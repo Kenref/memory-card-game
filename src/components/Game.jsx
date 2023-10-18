@@ -100,7 +100,7 @@ export default function Game({
 		setTimeout(() => {
 			const shuffled = shuffleCards([...cards]);
 			setCards(shuffled);
-		}, 1000);
+		}, 800);
 	};
 
 	const saveClick = (pokemon) => {
@@ -136,7 +136,7 @@ export default function Game({
 			setCardFlipped(true);
 			setTimeout(() => {
 				setCardFlipped(false);
-			}, 1200);
+			}, 2000);
 		}, 100);
 	};
 
