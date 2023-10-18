@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, forwardRef } from "react";
-// import { Modal } from "bootstrap";
-// import * as bootstrap from "bootstrap";
+import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 
 const GameModal = forwardRef((props, ref) => {
@@ -20,7 +18,7 @@ const GameModal = forwardRef((props, ref) => {
 			setGameState("running");
 		}
 	};
-	//TODO add style to the modal
+
 	return (
 		<div
 			className="modal modal-lg"

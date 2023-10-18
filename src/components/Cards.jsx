@@ -37,8 +37,10 @@ export default function Card({
 
 	return (
 		<div
-			className={`col-2 custom-flip-card ${cardFlipped ? "flipped" : ""}`}
-			style={{ maxHeight: "210px" }}
+			className={`col-sm-2 col-3 custom-flip-card ${
+				cardFlipped ? "flipped" : ""
+			}`}
+			style={{ maxHeight: window.innerWidth >= 1000 ? "210px" : "auto" }}
 		>
 			<div
 				className="custom-card-front card"

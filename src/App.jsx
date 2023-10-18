@@ -33,7 +33,7 @@ export default function App() {
 				backgroundImage: "url(/bg.webp)",
 				backgroundSize: "cover",
 				backgroundRepeat: "no-repeat",
-				height: "100vh",
+				minHeight: "100vh",
 				width: "100vw",
 				overflow: "hidden",
 			}}
@@ -57,7 +57,7 @@ export default function App() {
 					setScore={setScore}
 					score={score}
 					className={
-						"row text-center gap-sm-1 gap-md-2 gap-lg-3 gap-xl-4 justify-content-center mx-auto"
+						"row text-center gap-sm-1 gap-md-2 gap-lg-3 gap-xl-4 justify-content-center mx-auto flex-wrap"
 					}
 					style={{
 						fontFamily: "Gill Sans, sans serif",
