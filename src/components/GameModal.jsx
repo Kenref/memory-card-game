@@ -9,14 +9,13 @@ const GameModal = forwardRef((props, ref) => {
 		setDifficultyAndLoadCards,
 		handleFlip,
 		modalTitle,
-		modalBody,
 		gameState,
 		setGameState,
 	} = props;
 
 	const onButtonClick = (difficulty) => {
-		setDifficultyAndLoadCards(difficulty);
 		handleFlip();
+		setDifficultyAndLoadCards(difficulty);
 		if (gameState !== "running") {
 			setGameState("running");
 		}
@@ -47,8 +46,19 @@ const GameModal = forwardRef((props, ref) => {
 							aria-label="Close"
 						></button>
 					</div>
-					<div className="modal-body">
-						<p>{modalBody}</p>
+					<div className="modal-body col">
+						<img src="squirtle.jpg" alt="squirtle picture" className=" col-3" />
+						<img
+							src="bulbasaur.png"
+							alt="bulbasaur picture"
+							className=" col-3"
+						/>
+						<img
+							src="charmander.png"
+							alt="Charmander picture"
+							className=" col-3"
+						/>
+						<img src="pikachu.png" alt="pikachu picture" className=" col-3" />
 					</div>
 					<div className="modal-footer justify-content-around">
 						<button
@@ -73,7 +83,7 @@ const GameModal = forwardRef((props, ref) => {
 						</button>
 						<button
 							type="button"
-							className="btn btn-warning col-2"
+							className="btn btn-danger col-2"
 							data-bs-dismiss="modal"
 							onClick={() => {
 								onButtonClick(gameDifficulty.hard);
@@ -83,7 +93,7 @@ const GameModal = forwardRef((props, ref) => {
 						</button>
 						<button
 							type="button"
-							className="btn btn-danger col-3"
+							className="btn btn-warning col-3"
 							data-bs-dismiss="modal"
 							onClick={() => {
 								onButtonClick(gameDifficulty.impossible);

@@ -34,8 +34,7 @@ export default function Game({
 	style = {},
 	className = {},
 }) {
-	const [modalTitle, setModalTitle] = useState("Instructions");
-	const [modalBody, setModalBody] = useState(
+	const [modalTitle, setModalTitle] = useState(
 		"Select each Pokemon to win. Select any twice and you lose."
 	);
 	const [cards, setCards] = useState([]);
@@ -69,6 +68,7 @@ export default function Game({
 	}, [gameState]);
 
 	const setDifficultyAndLoadCards = (newDifficulty) => {
+		setCardFlipped(true);
 		setGameDifficulty({ ...gameDifficulty, difficulty: newDifficulty });
 		initialiseGame(newDifficulty);
 	};
@@ -114,17 +114,17 @@ export default function Game({
 		const uniquePokemon = new Set(clickedCardsSnapshot);
 		if (uniquePokemon.size < clickedCardsSnapshot.length) {
 			setGameState("over");
-			setModalTitle("You lose");
-			setModalBody(`Your score was ${score}. Pick a difficulty to play again`);
+			setModalTitle(
+				`You Lose. Your score was ${score}. Pick a difficulty to play again`
+			);
 			return "lose";
 		} else if (
 			clickedCardsSnapshot.length === cards.length &&
 			clickedCardsSnapshot.length > 0
 		) {
 			setGameState("over");
-			setModalTitle("You Win");
-			setModalBody(
-				`Your score was ${score + 1}. Pick a difficulty to play again`
+			setModalTitle(
+				`You Win. Your score was ${score + 1}. Pick a difficulty to play again`
 			);
 			return "win";
 		}
@@ -170,7 +170,6 @@ export default function Game({
 				setDifficultyAndLoadCards={setDifficultyAndLoadCards}
 				handleFlip={handleFlip}
 				modalTitle={modalTitle}
-				modalBody={modalBody}
 				gameState={gameState}
 				setGameState={setGameState}
 				setClickedCards={setClickedCards}
