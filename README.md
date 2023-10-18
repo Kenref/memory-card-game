@@ -21,4 +21,4 @@
 
 <h2>Screenshot:</h2>
 
-![memory](https://github.com/Kenref/memory-card-game/assets/107287396/8be44e6f-e986-481b-bbff-1bb56c2a05a7)
+![memory](https://github.com/Kenref/memory-card-game/assets/107287396/6b585b23-d0de-4c63-bfa1-28929a5c4c7a)
