@@ -132,10 +132,8 @@ export default function Game({
 	};
 
 	const handleFlip = () => {
-		// Wait a bit before flipping
 		setTimeout(() => {
 			setCardFlipped(true);
-			// Wait before flipping back
 			setTimeout(() => {
 				setCardFlipped(false);
 			}, 1200);
@@ -158,8 +156,6 @@ export default function Game({
 			}
 		}
 	};
-	//TODO need to make it so that cards will stay flipped until all cards are loaded
-	//TODO fix responsiveness
 
 	return (
 		<>
