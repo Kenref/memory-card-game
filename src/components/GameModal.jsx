@@ -5,14 +5,16 @@ const GameModal = forwardRef((props, ref) => {
 	const {
 		gameDifficulty,
 		setDifficultyAndLoadCards,
-		handleFlip,
 		modalTitle,
 		gameState,
 		setGameState,
+		setCardFlipped,
 	} = props;
 
 	const onButtonClick = (difficulty) => {
-		handleFlip();
+		setTimeout(() => {
+			setCardFlipped(false);
+		}, 2000);
 		setDifficultyAndLoadCards(difficulty);
 		if (gameState !== "running") {
 			setGameState("running");
@@ -117,9 +119,9 @@ GameModal.propTypes = {
 		impossible: PropTypes.number,
 	}).isRequired,
 	setDifficultyAndLoadCards: PropTypes.func.isRequired,
-	handleFlip: PropTypes.func.isRequired,
 	modalTitle: PropTypes.string,
 	modalBody: PropTypes.string,
 	gameState: PropTypes.string,
 	setGameState: PropTypes.func,
+	setCardFlipped: PropTypes.func,
 };

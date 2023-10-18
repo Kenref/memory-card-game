@@ -136,7 +136,7 @@ export default function Game({
 			setCardFlipped(true);
 			setTimeout(() => {
 				setCardFlipped(false);
-			}, 2000);
+			}, 1200);
 		}, 100);
 	};
 
@@ -164,12 +164,12 @@ export default function Game({
 				gameDifficulty={gameDifficulty}
 				setGameDifficulty={setGameDifficulty}
 				setDifficultyAndLoadCards={setDifficultyAndLoadCards}
-				handleFlip={handleFlip}
 				modalTitle={modalTitle}
 				gameState={gameState}
 				setGameState={setGameState}
 				setClickedCards={setClickedCards}
 				setCards={setCards}
+				setCardFlipped={setCardFlipped}
 			/>
 			<div className={className} style={style}>
 				{cards.map((card) => {
