@@ -4,7 +4,7 @@
 <ul>
     <li>The objective is to only click on cards that have not been clicked on before. Double up and you lose.</li>
     <li>This project was made with React and Bootstrap</li>
-    <li>There are 4 difficulty levels available</li>
+    <li>There are 4 difficulty levels available and Pokemon will be pulled at random each time</li>
     <li>The cards were supplied by the https://pokeapi.co/ API</li>
 </ul>
 <br>
