@@ -35,6 +35,12 @@ export default function Card({
 			});
 	}, [pokemonApiID]);
 
+	useEffect(() => {
+		const imageUrl = "cardback.png";
+		const img = new Image();
+		img.src = imageUrl;
+	}, []);
+
 	return (
 		<div
 			className={`col-sm-2 col-3 custom-flip-card ${
