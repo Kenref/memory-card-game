@@ -36,9 +36,8 @@ export default function Card({
 	}, [pokemonApiID]);
 
 	useEffect(() => {
-		const imageUrl = "cardback.png";
 		const img = new Image();
-		img.src = imageUrl;
+		img.src = "/public/cardback.png";
 	}, []);
 
 	return (
